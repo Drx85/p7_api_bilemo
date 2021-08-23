@@ -2,12 +2,25 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
+#[ApiResource(
+	itemOperations: [
+		'put',
+		'delete',
+		'get' => [
+			'normalization_context' => ['groups' => ['read:User:collection', 'read:User:item', 'read:Customer']]
+		]
+	],
+	denormalizationContext: ['groups' => ['write:User']],
+	normalizationContext: ['groups' => ['read:User:collection']]
+)]
 class User
 {
     /**
@@ -15,36 +28,45 @@ class User
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+	#[Groups('read:User:collection')]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $first_name;
+	#[Groups(['read:User:collection', 'write:User'])]
+	
+    private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $last_name;
+	#[Groups(['read:User:collection', 'write:User'])]
+    private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+	#[Groups(['write:User'])]
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+	#[Groups(['read:User:item', 'write:User'])]
     private $email;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $phone_number;
+	#[Groups(['read:User:item', 'write:User'])]
+    private $phoneNumber;
 
     /**
      * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="users")
+	 * @ORM\JoinColumn(nullable=false)
      */
+	#[Groups(['write:User'])]
     private $customer;
 
     public function getId(): ?int
@@ -54,24 +76,24 @@ class User
 
     public function getFirstName(): ?string
     {
-        return $this->first_name;
+        return $this->firstName;
     }
 
-    public function setFirstName(string $first_name): self
+    public function setFirstName(string $firstName): self
     {
-        $this->first_name = $first_name;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
     public function getLastName(): ?string
     {
-        return $this->last_name;
+        return $this->lastName;
     }
 
-    public function setLastName(string $last_name): self
+    public function setLastName(string $lastName): self
     {
-        $this->last_name = $last_name;
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -102,12 +124,12 @@ class User
 
     public function getPhoneNumber(): ?string
     {
-        return $this->phone_number;
+        return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(?string $phone_number): self
+    public function setPhoneNumber(?string $phoneNumber): self
     {
-        $this->phone_number = $phone_number;
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
