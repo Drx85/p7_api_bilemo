@@ -2,12 +2,22 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @ORM\Entity(repositoryClass=ProductRepository::class) *
  */
+#[ApiResource(
+	itemOperations: [
+		'get' => [
+			'normalization_context' => ['groups' => ['read:Product:collection', 'read:Product:item']]
+		]
+	],
+	normalizationContext: ['groups' => ['read:Product:collection']]
+)]
 class Product
 {
     /**
@@ -15,32 +25,38 @@ class Product
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+	#[Groups('read:Product:collection')]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+	#[Groups('read:Product:collection')]
     private $name;
 
     /**
      * @ORM\Column(type="integer")
      */
+	#[Groups('read:Product:item')]
     private $os;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
+	#[Groups('read:Product:item')]
     private $description;
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=2)
      */
+	#[Groups('read:Product:item')]
     private $price;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $created_at;
+	#[Groups('read:Product:item')]
+    private $createdAt;
 
     public function getId(): ?int
     {
@@ -97,12 +113,12 @@ class Product
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
