@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class) *
@@ -16,8 +19,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 			'normalization_context' => ['groups' => ['read:Product:collection', 'read:Product:item']]
 		]
 	],
-	normalizationContext: ['groups' => ['read:Product:collection']]
-)]
+	normalizationContext: ['groups' => ['read:Product:collection']],
+	order: ['name'],
+	paginationItemsPerPage: 20
+),
+]
 class Product
 {
     /**
@@ -31,7 +37,8 @@ class Product
     /**
      * @ORM\Column(type="string", length=255)
      */
-	#[Groups('read:Product:collection')]
+	#[Groups('read:Product:collection'),
+	Length(min: 3)]
     private $name;
 
     /**
@@ -49,7 +56,8 @@ class Product
     /**
      * @ORM\Column(type="decimal", precision=6, scale=2)
      */
-	#[Groups('read:Product:item')]
+	#[Groups('read:Product:item'),
+	NotBlank]
     private $price;
 
     /**
