@@ -14,12 +14,19 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @ORM\Entity(repositoryClass=ProductRepository::class) *
  */
 #[ApiResource(
+	collectionOperations: ['get'],
 	itemOperations: [
 		'get' => [
-			'normalization_context' => ['groups' => ['read:Product:collection', 'read:Product:item']]
+			'normalization_context' => [
+				'groups' => ['read:Product:collection', 'read:Product:item'],
+				'openapi_definition_name' => 'Detail'
+			]
 		]
 	],
-	normalizationContext: ['groups' => ['read:Product:collection']],
+	normalizationContext: [
+		'groups' => ['read:Product:collection'],
+		'openapi_definition_name' => 'Collection'
+		],
 	order: ['name'],
 	paginationItemsPerPage: 20
 ),
@@ -38,7 +45,8 @@ class Product
      * @ORM\Column(type="string", length=255)
      */
 	#[Groups('read:Product:collection'),
-	Length(min: 3)]
+	Length(min: 3),
+	NotBlank]
     private $name;
 
     /**

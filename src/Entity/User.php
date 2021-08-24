@@ -15,14 +15,19 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 #[ApiResource(
 	itemOperations: [
-		'put',
+		'patch',
 		'delete',
 		'get' => [
-			'normalization_context' => ['groups' => ['read:User:collection', 'read:User:item', 'read:Customer']]
+			'normalization_context' => [
+				'groups' => ['read:User:collection', 'read:User:item', 'read:Customer'],
+				'openapi_definition_name' => 'Detail']
 		]
 	],
 	denormalizationContext: ['groups' => ['write:User']],
-	normalizationContext: ['groups' => ['read:User:collection']],
+	normalizationContext: [
+		'groups' => ['read:User:collection'],
+		'openapi_definition_name' => 'Collection'
+	],
 	order: ['lastName'],
 	paginationItemsPerPage: 10
 )]
@@ -54,7 +59,8 @@ class User
 	 * @ORM\Column(type="string", length=255)
 	 */
 	#[Groups(['write:User']),
-	NotBlank]
+	NotBlank,
+	Length(min: 6)]
 	private $password;
 	
 	/**
@@ -75,7 +81,7 @@ class User
 	 * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="users")
 	 * @ORM\JoinColumn(nullable=false)
 	 */
-	#[Groups(['write:User'])]
+	#[Groups(['write:User', 'read:User:item'])]
 	private $customer;
 	
 	public function getId(): ?int

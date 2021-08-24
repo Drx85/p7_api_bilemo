@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Action\NotFoundAction;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\CustomerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,7 +13,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
  */
-#[ApiResource]
+#[ApiResource(
+	collectionOperations: [],
+	itemOperations: ['get' => [
+		'controller' => NotFoundAction::class,
+		'openapi_context'=> [
+			'summary' => 'hidden'
+		],
+		'read' => false,
+		'output' => false
+	]]
+)]
 class Customer
 {
     /**
