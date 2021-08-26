@@ -81,7 +81,7 @@ class User
 	 * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="users")
 	 * @ORM\JoinColumn(nullable=false)
 	 */
-	#[Groups(['write:User', 'read:User:item'])]
+	#[Groups(['read:User:item'])]
 	private $customer;
 	
 	public function getId(): ?int

@@ -17,11 +17,11 @@ class CustomerFixtures extends Fixture
 	public function load(ObjectManager $manager)
 	{
 		$customer = new Customer();
-		$customer->setSiret('002')
-			->setName('test2')
-			->setPhoneNumber('02')
+		$customer->setSiret('3')
+			->setName('test3')
+			->setPhoneNumber('03')
 			->setRoles(['ROLE_USER'])
-			->setEmail('test2@gmail.com')
+			->setEmail('test3@gmail.com')
 			->setPassword($this->passwordHasher->hashPassword($customer, 'demo'));
 		$manager->persist($customer);
 		$manager->flush();

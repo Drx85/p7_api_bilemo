@@ -94,7 +94,6 @@ class OpenApiFactory implements OpenApiFactoryInterface
 				)
 			)
 		);
-		
 		$openApi->getPaths()->addPath('/api/login_check', $pathItem);
 		
 		$pathItem = new PathItem(
@@ -106,10 +105,7 @@ class OpenApiFactory implements OpenApiFactoryInterface
 				]
 			)
 		);
-		
 		$openApi->getPaths()->addPath('/api/logout', $pathItem);
-		
-		
 		
 		$pathItem = new PathItem(
 			post: new Operation(
@@ -138,7 +134,6 @@ class OpenApiFactory implements OpenApiFactoryInterface
 				)
 			)
 		);
-		
 		$openApi->getPaths()->addPath('/api/token/refresh', $pathItem);
 		
 		return $openApi;
