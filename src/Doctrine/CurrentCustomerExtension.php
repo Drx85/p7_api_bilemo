@@ -23,7 +23,7 @@ class CurrentCustomerExtension implements QueryCollectionExtensionInterface, Que
 	 * @param string                      $resourceClass
 	 * @param string|null                 $operationName
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function applyToCollection(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)
 	{
@@ -38,9 +38,14 @@ class CurrentCustomerExtension implements QueryCollectionExtensionInterface, Que
 	 * @param string|null                 $operationName
 	 * @param array                       $context
 	 *
-	 * @return mixed
+	 * @return void
 	 */
-	public function applyToItem(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, array $identifiers, string $operationName = null, array $context = [])
+	public function applyToItem(QueryBuilder $queryBuilder,
+								QueryNameGeneratorInterface $queryNameGenerator,
+								string $resourceClass,
+								array $identifiers,
+								string $operationName = null,
+								array $context = [])
 	{
 		$this->addWhere($resourceClass, $queryBuilder);
 	}

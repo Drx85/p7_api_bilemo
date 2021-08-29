@@ -33,6 +33,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 ]
 class Product
 {
+	const OS = [
+		0 => 'Apple',
+		1 => 'Android',
+		3 => 'Windows Phone'
+	];
+	
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -91,14 +97,15 @@ class Product
         return $this;
     }
 
-    public function getOs(): ?int
+    public function getOs(): ?string
     {
-        return $this->os;
+        return self::OS[$this->os];
     }
 
-    public function setOs(int $os): self
+    public function setOs(string $os): self
     {
-        $this->os = $os;
+    	$array_os = array_flip(self::OS);
+        $this->os = $array_os[$os];
 
         return $this;
     }
