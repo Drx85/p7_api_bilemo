@@ -36,7 +36,7 @@ class Product
 	const OS = [
 		0 => 'Apple',
 		1 => 'Android',
-		3 => 'Windows Phone'
+		2 => 'Windows Phone'
 	];
 	
     /**

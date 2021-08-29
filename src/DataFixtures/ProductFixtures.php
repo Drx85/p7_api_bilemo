@@ -22,7 +22,7 @@ class ProductFixtures extends Fixture
 			$product = new Product();
 			$product->setName($faker->word)
 				->setDescription($faker->sentences(4, true))
-				->setOs(1)
+				->setOs(Product::OS[mt_rand(0,2)])
 				->setCreatedAt(new \DateTimeImmutable())
 				->setPrice($faker->randomFloat(1, 50, 2000));
 			$manager->persist($product);
