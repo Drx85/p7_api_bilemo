@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 		'openapi_definition_name' => 'Collection'
 		],
 	order: ['name'],
-	paginationItemsPerPage: 20
+	paginationItemsPerPage: 10
 ),
 ]
 class Product

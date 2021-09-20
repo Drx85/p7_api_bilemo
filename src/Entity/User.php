@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ApiResource(
 	itemOperations: [
 		'patch',
+		'put',
 		'delete',
 		'get' => [
 			'normalization_context' => [
@@ -29,7 +30,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 		'openapi_definition_name' => 'Collection'
 	],
 	order: ['lastName'],
-	paginationItemsPerPage: 10
+	paginationItemsPerPage: 5
 )]
 class User
 {
