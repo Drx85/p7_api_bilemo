@@ -61,7 +61,7 @@ To get a copy up and running follow these simple steps.
 
 ### Config 
 
-1.  Open ***.env*** file, then replace Database fields with your own information 
+1.  Open .env.example file, replace SMTP field (line 25) with your own information, and rename it .env
 2.  If you are missing any information, please ask you webhost for Database credentials
 
 ### Install all dependencies
@@ -96,12 +96,17 @@ php bin/console doctrine:fixtures:load
 
 ### Finalization
 
-1.  Générate your own SSL keys running (if needed see [Lexik Documentation](https://github.com/lexik/LexikJWTAuthenticationBundle/blob/2.x/Resources/doc/index.md))
+1.  Generate your own SSL keys running (if needed see [Lexik Documentation](https://github.com/lexik/LexikJWTAuthenticationBundle/blob/2.x/Resources/doc/index.md))
 ```sh
 php bin/console lexik:jwt:generate-keypair
 ```
 
-2.  Go to "/api" to see the API documentation
+2.  (local only) To start the server, run
+```sh
+symfony s:start
+```
+
+3.  Go to "/api" to see the API documentation
 
 ## Usage
 
