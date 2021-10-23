@@ -112,7 +112,7 @@ symfony s:start
 
 ### Online example version
 
-Please see an hosted example version here : *waiting end of project to share link*
+Please see an hosted example version here : [https://deperne.fr/api_bilemo/public/api](https://deperne.fr/api_bilemo/public/api)
 
 ## Contact
 
